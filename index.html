@@ -1,1 +1,137 @@
-Hello World
+<div id="hello">Welcome to JeffKochuk.com</div>
+<style>
+    #hello {
+        color: #000;
+        display: inline-block;
+        font: 24px bolder Roboto, sans-serif;
+        position: absolute;
+    }
+
+    body {
+        height: 100vh;
+        overflow: hidden;
+        width: 100vw;
+    }
+</style>
+<script>
+    let box = document.getElementById('hello'),
+        colors = ['#ff0000', '#ff4000', '#ff8000', '#40ff00', '#00ff00', '#00ff40', '#00ff80', '#00ffbf', '#00bfff', '#0080ff', '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff', '#ff00ff', '#ff00bf', '#ff0080', '#ff0040', '#ff0000',],
+        currentColor = 0,
+        translateX = Math.floor((Math.random() * window.innerWidth / 2) + 1),
+        translateY = Math.floor((Math.random() * window.innerHeight / 2) + 1),
+        boxWidth = box.offsetWidth,
+        boxHeight = box.offsetHeight,
+        boxTop = box.offsetTop,
+        boxLeft = box.offsetLeft,
+        xMin = -boxLeft,
+        yMin = -boxTop,
+        xMax = window.innerWidth - boxLeft - boxWidth,
+        yMax = window.innerHeight - boxTop - boxHeight,
+        direction = 'se',
+        speed = 2;
+
+    function init() {
+        requestAnimationFrame(init);
+        move();
+    }
+
+    function move() {
+        setDirection();
+        setStyle(box, {
+            transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
+        });
+    }
+
+    function setDirection() {
+        switch (direction) {
+            case 'ne':
+                translateX += speed;
+                translateY -= speed;
+                break;
+            case 'nw':
+                translateX -= speed;
+                translateY -= speed;
+                break;
+            case 'se':
+                translateX += speed;
+                translateY += speed;
+                break;
+            case 'sw':
+                translateX -= speed;
+                translateY += speed;
+                break;
+        }
+        setLimits();
+    }
+
+    function setLimits() {
+        if (translateY <= yMin) {
+            if (direction == 'nw') {
+                direction = 'sw';
+            } else if (direction == 'ne') {
+                direction = 'se';
+            }
+            switchColor();
+        }
+        if (translateY >= yMax) {
+            if (direction == 'se') {
+                direction = 'ne';
+            } else if (direction == 'sw') {
+                direction = 'nw';
+            }
+            switchColor();
+        }
+        if (translateX <= xMin) {
+            if (direction == 'nw') {
+                direction = 'ne';
+            } else if (direction == 'sw') {
+                direction = 'se';
+            }
+            switchColor();
+        }
+        if (translateX >= xMax) {
+            if (direction == 'ne') {
+                direction = 'nw';
+            } else if (direction == 'se') {
+                direction = 'sw';
+            }
+            switchColor();
+        }
+    }
+
+    function switchColor() {
+        let color = Math.floor((Math.random() * colors.length) + 1);
+        while (color === currentColor) {
+            color = Math.floor((Math.random() * colors.length) + 1);
+        }
+        setStyle(box, {
+            color: colors[color],
+        });
+        currentColor = color;
+    }
+
+
+    function setStyle(element, properties) {
+        let css = '';
+        for (property in properties) {
+            css += `${property}: ${properties[property]};`;
+        }
+        element.style.cssText += css;
+    }
+
+    let timeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(timeout);
+        timeout = setTimeout(update, 100);
+    }, false);
+
+    function update() {
+        xMin = -boxLeft;
+        yMin = -boxTop;
+        xMax = win.innerWidth - boxLeft - boxWidth;
+        yMax = win.innerHeight - boxTop - boxHeight;
+    }
+
+    init();
+
+</script>
