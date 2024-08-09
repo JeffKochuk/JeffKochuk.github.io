@@ -1,137 +1,70 @@
-<div id="hello">{Insert snazzy personal site here}</div>
-<style>
-    #hello {
-        color: #000;
-        display: inline-block;
-        font: 24px bolder Roboto, sans-serif;
-        position: absolute;
-    }
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jeff Kochuk</title>
+    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
 
-    body {
-        height: 100vh;
-        overflow: hidden;
-        width: 100vw;
-    }
-</style>
-<script>
-    let box = document.getElementById('hello'),
-        colors = ['#ff0000', '#ff4000', '#ff8000', '#40ff00', '#00ff00', '#00ff40', '#00ff80', '#00ffbf', '#00bfff', '#0080ff', '#0040ff', '#0000ff', '#4000ff', '#8000ff', '#bf00ff', '#ff00ff', '#ff00bf', '#ff0080', '#ff0040', '#ff0000',],
-        currentColor = 0,
-        translateX = Math.floor((Math.random() * window.innerWidth / 2) + 1),
-        translateY = Math.floor((Math.random() * window.innerHeight / 2) + 1),
-        boxWidth = box.offsetWidth,
-        boxHeight = box.offsetHeight,
-        boxTop = box.offsetTop,
-        boxLeft = box.offsetLeft,
-        xMin = -boxLeft,
-        yMin = -boxTop,
-        xMax = window.innerWidth - boxLeft - boxWidth,
-        yMax = window.innerHeight - boxTop - boxHeight,
-        direction = 'se',
-        speed = 2;
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Serif&family=Open+Sans&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background-color: #121212;
+        color: #fff;
+        font-optical-sizing: auto;
+        font-weight: 400;
+        font-style: normal;
+        font-variation-settings: "wdth" 100;
+      }
+      main {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
 
-    function init() {
-        requestAnimationFrame(init);
-        move();
-    }
-
-    function move() {
-        setDirection();
-        setStyle(box, {
-            transform: `translate3d(${translateX}px, ${translateY}px, 0)`,
-        });
-    }
-
-    function setDirection() {
-        switch (direction) {
-            case 'ne':
-                translateX += speed;
-                translateY -= speed;
-                break;
-            case 'nw':
-                translateX -= speed;
-                translateY -= speed;
-                break;
-            case 'se':
-                translateX += speed;
-                translateY += speed;
-                break;
-            case 'sw':
-                translateX -= speed;
-                translateY += speed;
-                break;
-        }
-        setLimits();
-    }
-
-    function setLimits() {
-        if (translateY <= yMin) {
-            if (direction == 'nw') {
-                direction = 'sw';
-            } else if (direction == 'ne') {
-                direction = 'se';
-            }
-            switchColor();
-        }
-        if (translateY >= yMax) {
-            if (direction == 'se') {
-                direction = 'ne';
-            } else if (direction == 'sw') {
-                direction = 'nw';
-            }
-            switchColor();
-        }
-        if (translateX <= xMin) {
-            if (direction == 'nw') {
-                direction = 'ne';
-            } else if (direction == 'sw') {
-                direction = 'se';
-            }
-            switchColor();
-        }
-        if (translateX >= xMax) {
-            if (direction == 'ne') {
-                direction = 'nw';
-            } else if (direction == 'se') {
-                direction = 'sw';
-            }
-            switchColor();
-        }
-    }
-
-    function switchColor() {
-        let color = Math.floor((Math.random() * colors.length) + 1);
-        while (color === currentColor) {
-            color = Math.floor((Math.random() * colors.length) + 1);
-        }
-        setStyle(box, {
-            color: colors[color],
-        });
-        currentColor = color;
-    }
-
-
-    function setStyle(element, properties) {
-        let css = '';
-        for (property in properties) {
-            css += `${property}: ${properties[property]};`;
-        }
-        element.style.cssText += css;
-    }
-
-    let timeout;
-    window.addEventListener('resize', () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(update, 100);
-    }, false);
-
-    function update() {
-        xMin = -boxLeft;
-        yMin = -boxTop;
-        xMax = win.innerWidth - boxLeft - boxWidth;
-        yMax = win.innerHeight - boxTop - boxHeight;
-    }
-
-    init();
-
-</script>
+        width: fit-content;
+        margin: 0 auto;
+      }
+      h1 {
+        font-family: "Open Sans", sans-serif;
+        font-size: 3em;
+        width: 100%;
+      }
+      ul {
+        font-family: "Noto Serif", serif;
+        font-size: 1.2rem;
+        list-style-type: circle;
+        padding: 0;
+        line-height: 2rem;
+        letter-spacing: 0.05rem;
+      }
+      a {
+        color: #a7e0ff;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Jeff Kochuk</h1>
+      <ul>
+        <li>
+          For engineering opportunities:
+          <a href="mailto:eng@jeffkochuk.com">eng@jeffkochuk.com</a>
+        </li>
+        <li>
+          For circus bookings:
+          <a href="mailto:circus@jeffkochuk.com">circus@jeffkochuk.com</a>
+        </li>
+        <li>
+          For crypto moonshots and LLM unicorns:
+          <a href="mailto:Just.stop.it">noreply@jeffkochuk.com</a>
+        </li>
+      </ul>
+    </main>
+  </body>
+</html>
