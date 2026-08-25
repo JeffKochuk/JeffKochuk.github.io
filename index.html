@@ -1,70 +1,316 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jeff Kochuk</title>
-    <link rel="icon" href="./favicon.ico" type="image/x-icon" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Serif&family=Open+Sans&display=swap"
-      rel="stylesheet"
-    />
-    <style>
-      body {
-        background-color: #121212;
-        color: #fff;
-        font-optical-sizing: auto;
-        font-weight: 400;
-        font-style: normal;
-        font-variation-settings: "wdth" 100;
-      }
-      main {
-        display: flex;
-        flex-flow: column nowrap;
-        align-items: center;
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jeff Kochuk</title>
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%2314161c'/><text x='50' y='63' text-anchor='middle' font-family='Georgia,serif' font-size='34' fill='%23ece9e2' font-style='italic'>JK</text></svg>">
 
-        width: fit-content;
-        margin: 0 auto;
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=IBM+Plex+Mono&display=swap">
+
+  <style>
+    :root {
+      /* Look at this fun new color system I definitely know how to use intuitively! */
+      --paper: oklch(0.155 0.012 250);
+      --ink: oklch(0.93 0.006 250);
+      --ink-soft: oklch(0.74 0.012 250);
+      --rule: oklch(0.32 0.014 250);
+      --accent: #93e483;
+      --hairline: 1px solid var(--rule);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "Cormorant Garamond", Georgia, serif;
+    }
+
+    a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: var(--accent);
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--paper);
+    }
+
+    .skip {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 3;
+      padding: 10px 16px;
+      background: var(--paper);
+      border: var(--hairline);
+      transform: translateY(calc(-100% - 10px));
+    }
+
+    .skip:focus {
+      transform: none;
+    }
+
+    .page {
+
+      container-type: inline-size;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 40px clamp(20px, 4.7vw, 44px) 32px;
+      position: relative;
+    }
+
+    .mono {
+      font-family: "IBM Plex Mono", ui-monospace, monospace;
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-soft);
+    }
+
+    .rule-double {
+      height: 5px;
+      border-block: var(--hairline);
+      margin: 18px 0 2px;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 8vh 0 10vh;
+    }
+
+    h1 {
+      margin: 0;
+      font-weight: 300;
+      font-size: min(92px, 33cqi);
+      line-height: 1;
+      text-wrap: balance;
+    }
+
+    .work {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: clamp(40px, 7vh, 76px);
+      max-width: 620px;
+    }
+
+    .work div {
+      font-size: min(34px, 23.5cqi);
+      letter-spacing: 0.01em;
+    }
+
+    .work hr {
+      width: 56px;
+      height: 1px;
+      border: none;
+      background: var(--rule);
+      margin: 22px 0;
+    }
+
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px 32px;
+      border-top: var(--hairline);
+      padding-top: 16px;
+    }
+
+    footer a {
+      overflow-wrap: anywhere;
+      font-size: min(28px, 11.5cqi);
+      letter-spacing: 0.01em;
+      padding-bottom: 2px;
+      transition: color 200ms, border-color 200ms;
+    }
+
+    footer a:hover {
+      border-color: var(--accent);
+    }
+
+    .egg {
+      position: absolute;
+      z-index: 2;
+      opacity: 0;
+      cursor: default;
+      user-select: none;
+      white-space: nowrap;
+      transition: opacity 500ms;
+    }
+
+    .egg.mono {
+      color: inherit;
+    }
+
+    .egg:hover {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    .e1 {
+      left: 12%;
+      top: 27%;
+      transform: rotate(-23deg);
+      font-style: italic;
+      font-size: 42px;
+    }
+
+    .e2 {
+      right: 8%;
+      top: 66%;
+      transform: rotate(97deg);
+      font-size: 13px;
+      letter-spacing: 0.4em;
+    }
+
+    /* Centered eggs: `translate` applies before `transform`, so each rule
+       below only carries its rotation. */
+    .e3,
+    .e4,
+    .e6,
+    .e7,
+    .e8 {
+      translate: -50% -50%;
+    }
+
+    .e3 {
+      left: 79.4%;
+      top: 13.6%;
+      transform: rotate(88deg);
+      font-style: italic;
+      font-size: 34px;
+    }
+
+    .e4 {
+      left: 12.4%;
+      top: 15.5%;
+      transform: rotate(-14deg);
+      font-size: 44px;
+      font-weight: 300;
+    }
+
+    .e5 {
+      right: 4.2%;
+      top: 21.8%;
+      translate: 0 -50%;
+      transform: rotate(12deg);
+      font-size: 18px;
+      letter-spacing: 0.3em;
+    }
+
+    .e6 {
+      left: 16.8%;
+      top: 85.7%;
+      transform: rotate(180deg);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: none;
+    }
+
+    .e7 {
+      left: 63.8%;
+      top: 31.4%;
+      transform: rotate(23deg) scaleX(-1);
+      font-size: 54px;
+      font-weight: 300;
+    }
+
+    .e8 {
+      left: 67.5%;
+      top: 74.2%;
+      transform: rotate(-31deg);
+      font-style: italic;
+      font-size: 64px;
+      font-weight: 300;
+    }
+
+    /* Eggs never sit over real text: drop them tier by tier as space runs out. */
+    @media (max-width: 1799px) {
+      [data-egg="0"] {
+        display: none;
       }
-      h1 {
-        font-family: "Open Sans", sans-serif;
-        font-size: 3em;
-        width: 100%;
+    }
+
+    @media (max-width: 1399px) {
+      [data-egg="1"] {
+        display: none;
       }
-      ul {
-        font-family: "Noto Serif", serif;
-        font-size: 1.2rem;
-        list-style-type: circle;
-        padding: 0;
-        line-height: 2rem;
-        letter-spacing: 0.05rem;
+    }
+
+    @media (max-width: 1099px) {
+      [data-egg="2"] {
+        display: none;
       }
-      a {
-        color: #a7e0ff;
-        text-decoration: none;
+    }
+
+    @media (max-width: 759px),
+    (max-height: 559px) {
+      [data-egg] {
+        display: none;
       }
-    </style>
-  </head>
-  <body>
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip mono" href="#jeff-kochuk">Skip to main Jeff Kochuk</a>
+
+  <div class="page">
+    <header class="mono">jeffkochuk.com</header>
+    <div class="rule-double"></div>
+
     <main>
-      <h1>Jeff Kochuk</h1>
-      <ul>
-        <li>
-          For engineering opportunities:
-          <a href="mailto:eng@jeffkochuk.com">eng@jeffkochuk.com</a>
-        </li>
-        <li>
-          For circus bookings:
-          <a href="mailto:circus@jeffkochuk.com">circus@jeffkochuk.com</a>
-        </li>
-        <li>
-          For crypto moonshots and LLM unicorns:
-          <a href="mailto:Just.stop.it">noreply@jeffkochuk.com</a>
-        </li>
-      </ul>
+      <h1 id="jeff-kochuk" tabindex="-1">Jeff<br>Kochuk</h1>
+      <div class="work">
+        <div>Anthropic</div>
+        <hr>
+        <div>Airtable</div>
+        <hr>
+        <div>Google</div>
+      </div>
     </main>
-  </body>
+
+    <footer>
+      <a href="mailto:Jeff@JeffKochuk.com">Jeff@JeffKochuk.com</a>
+      <span class="mono">Jeff Kochuk</span>
+    </footer>
+
+  </div>
+  <div aria-hidden="true">
+    <div class="egg e1" data-egg="0">Jeff Kochuk</div>
+    <div class="egg e2 mono" data-egg="3">Jeff Kochuk</div>
+    <div class="egg e3" data-egg="3">Jeff Kochuk</div>
+    <div class="egg e4" data-egg="2">Jeff Kochuk</div>
+    <div class="egg e5 mono" data-egg="3">Jeff Kochuk</div>
+    <div class="egg e6 mono" data-egg="2">Jeff Kochuk</div>
+    <div class="egg e7" data-egg="1">Jeff Kochuk</div>
+    <div class="egg e8" data-egg="2">Jeff Kochuk</div>
+  </div>
+</body>
+
 </html>
